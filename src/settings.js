@@ -1,6 +1,10 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: 'Antz Application Framework',
+
+  logoImage: 'applogo.png',
+
+  logoTitle: 'XX管理系统',
 
   /**
    * @type {boolean} true | false
@@ -12,5 +16,5 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: false
+  sidebarLogo: true
 }

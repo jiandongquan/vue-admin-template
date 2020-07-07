@@ -14,6 +14,9 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'SidebarLogo',
   props: {
@@ -22,11 +25,11 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      title: 'Vue Admin Template',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
-    }
+  computed: {
+    ...mapGetters({
+      title: 'logoTitle',
+      logo: 'logoImage'
+    })
   }
 }
 </script>

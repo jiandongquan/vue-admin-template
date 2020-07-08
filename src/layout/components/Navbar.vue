@@ -5,6 +5,7 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
+      <user-info class="user-avatar" @changepassword="showDialog" />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
@@ -28,6 +29,9 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <div>
+      <change-password ref="passwordDialog" />
+    </div>
   </div>
 </template>
 
@@ -35,11 +39,15 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import UserInfo from './UserInfo'
+import ChangePassword from './Password'
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    UserInfo,
+    ChangePassword
   },
   computed: {
     ...mapGetters([
@@ -54,7 +62,11 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    showDialog() {
+      this.$refs.passwordDialog.dialogVisiable = true
     }
+
   }
 }
 </script>
@@ -85,7 +97,7 @@ export default {
   }
 
   .right-menu {
-    float: right;
+    float:right;
     height: 100%;
     line-height: 50px;
 
@@ -112,7 +124,7 @@ export default {
     }
 
     .avatar-container {
-      margin-right: 30px;
+      margin-right: 20px;
 
       .avatar-wrapper {
         margin-top: 5px;

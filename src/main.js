@@ -15,6 +15,8 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import 'default-passive-events' // 为消除chrome的警告消息而引入；
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api

@@ -6,6 +6,7 @@
       placement="top-start"
       width="300"
       trigger="hover"
+      :close-delay="0"
     >
       <div class="header">
         <img src="user.jpg" class="user-avatar">

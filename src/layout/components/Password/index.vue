@@ -1,23 +1,23 @@
 <template>
   <div>
     <el-dialog title="修改用户密码" :visible.sync="dialogVisiable" width="500px" @opened="focusInput" @close="clearForm">
-      <el-form ref="inputform" :model="form" :rules="inputRules" label-width="120px">
+      <el-form ref="changePasswordForm" :model="form" :rules="inputRules" label-width="120px">
         <el-form-item label="用户账户：">
           <span>{{ username }}</span>
         </el-form-item>
         <el-form-item label="原密码" prop="originalPassword">
-          <el-input ref="input" v-model="form.originalPassword" type="password" placeholder="请输入您原来的密码" clearable />
+          <el-input ref="originalPasswordInput" v-model="form.originalPassword" type="password" placeholder="请输入您原来的密码" clearable tabindex="1" />
         </el-form-item>
         <el-form-item label="新密码" prop="newPassword">
-          <el-input v-model="form.newPassword" type="password" placeholder="请输入您新的密码" clearable />
+          <el-input v-model="form.newPassword" type="password" placeholder="请输入您新的密码" clearable tabindex="2" />
         </el-form-item>
         <el-form-item label="重复新密码" prop="verifyPassword">
-          <el-input v-model="form.verifyPassword" type="password" placeholder="请再次输入您新的密码" clearable />
+          <el-input v-model="form.verifyPassword" type="password" placeholder="请再次输入您新的密码" clearable tabindex="3" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancelClick">取消</el-button>
-        <el-button type="primary" @click="submitClick">提交</el-button>
+        <el-button @click="cancelClick">放弃</el-button>
+        <el-button :loading="loading" type="primary" @click="submitClick('changePasswordForm')">提交</el-button>
       </div>
     </el-dialog>
   </div>
@@ -26,6 +26,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { validatePasswordLevel2, validatePasswordLevel3, validatePasswordLevel4 } from '@/utils/validate'
+import { changePassword } from '@/api/user'
 export default {
   name: 'PasswordDialog',
   data() {
@@ -84,6 +85,7 @@ export default {
       }
     }
     return {
+      loading: false,
       dialogVisiable: false,
       form: {
         originalPassword: '', // 原密码
@@ -117,17 +119,30 @@ export default {
       this.dialogVisiable = false
     },
     clearForm() {
+      this.$refs.changePasswordForm.clearValidate()
       this.form.originalPassword = ''
       this.form.newPassword = ''
       this.form.verifyPassword = ''
-      this.$refs.inputform.resetFields()
     },
     focusInput() {
-      this.$refs.input.focus()
+      this.$refs.originalPasswordInput.focus()
     },
-    submitClick() {
-      this.clearForm()
-      this.closeDialog()
+    submitClick(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.loading = true
+          changePassword(this.form).then(result => {
+            console.log(result)
+          }).catch(() => {
+            this.loading = false
+          })
+          this.clearForm()
+          this.closeDialog()
+        } else {
+          console.log('valid failt')
+          return false
+        }
+      })
     },
     cancelClick() {
       this.clearForm()

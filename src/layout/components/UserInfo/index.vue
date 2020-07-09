@@ -1,27 +1,26 @@
 <template>
-  <div>
+  <div class="container">
     <img v-popover:popover1 src="user.jpg" class="user-avatar">
     <el-popover
       ref="popover1"
       placement="top-start"
       width="300"
       trigger="hover"
-      content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。"
     >
       <div class="header">
         <img src="user.jpg" class="user-avatar">
-        <span>{{ name }}</span>
+        <span>{{ username }}</span>
       </div>
       <div class="content">
         <div>
-          <router-link to="/">首页</router-link>
+          <el-button type="text" @click="gotohome">首页</el-button>
         </div>
         <div>
           <el-button type="text" @click="changPassword">修改密码</el-button>
         </div>
       </div>
       <div class="footer">
-        <el-button style="float: middle; padding: 3px 0" type="text" @click="logout">登出系统</el-button>
+        <el-button type="text" @click="logout">登出系统</el-button>
       </div>
     </el-popover>
   </div>
@@ -33,8 +32,7 @@ export default {
   name: 'UserInfo',
   computed: {
     ...mapGetters({
-      name: 'name',
-      roles: 'roles'
+      username: 'name'
     })
   },
   methods: {
@@ -45,16 +43,23 @@ export default {
     changPassword() {
       this.$refs.popover1.visiable = false // 这个用于消除chrome的警告；
       this.$emit('changepassword')
+    },
+    gotohome() {
+      this.$router.push('/')
     }
 
   }
 }
 </script>
 <style scoped>
+.container {
+  width: 35px;
+  height: 35px;
+}
 .user-avatar {
   cursor: pointer;
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
+  width: 35px;
+  height: 35px;
+  border-radius: 35px;
 }
 </style>

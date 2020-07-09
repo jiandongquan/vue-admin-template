@@ -1,13 +1,17 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import defaultSettings from '@/settings'
+
+const { passwordLevel } = defaultSettings
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    passwordLevel: passwordLevel
   }
 }
 

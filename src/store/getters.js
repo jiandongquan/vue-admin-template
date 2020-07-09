@@ -7,6 +7,7 @@ const getters = {
   roles: state => state.user.roles,
   permission_routes: state => state.permission.routes,
   logoTitle: state => state.settings.logoTitle,
-  logoImage: state => state.settings.logoImage
+  logoImage: state => state.settings.logoImage,
+  passwordLevel: state => state.user.passwordLevel
 }
 export default getters
